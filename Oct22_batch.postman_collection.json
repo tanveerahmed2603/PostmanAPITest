@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "8b79d249-d457-460d-8689-29c3003c9466",
+		"name": "Oct22_batch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get students",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "'{\n    \"firstName\" : \"Jhfffon\",\n    \"lastName\" : \"Dfffoe\",\n    \"email\"     : \"jhon.doe20@gmail.com\",\n    \"password\"  : \"123456\",\n    \"confirmPassword\"  : \"123456\",\n    \"dob\"       : {\n        \"year\"      : 2013,\n        \"month\"     : 12,\n        \"day\"       : 31\n    },\n    \"gender\"    : \"male\",\n    \"agree\"     : true\n}'"
+				},
+				"url": {
+					"raw": "https://qa.taltektc.com/api/students/",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"taltektc",
+						"com"
+					],
+					"path": [
+						"api",
+						"students",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup New User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resJson = pm.response.json();",
+							"",
+							"pm.test(\"Test Success\", function(){",
+							"    pm.response.to.have.status(201);",
+							"    pm.expect(resJson.success).to.be.true",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.message).to.eq(\"Registration Success\");",
+							"})",
+							"",
+							"pm.test(\"Test id\", function(){",
+							"     pm.expect(resJson).to.have.property(\"id\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\" : \"Tanveer\",\n    \"lastName\" : \"Ahmed\",\n    \"email\" : \"{{$randomEmail}}\",\n    \"password\": \"12345\",\n    \"confirmPassword\" : \"12345\",\n    \"dob\" : {\n        \"year\" : 1991,\n        \"month\": 12,\n        \"day\" : 12\n    },\n    \"gender\" : \"male\",\n    \"agree\" : true\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qa.taltektc.com/api/signup",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"taltektc",
+						"com"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Positive Scenario for Sign Up Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resJson = pm.response.json();",
+							"",
+							"pm.test(\"Test Success\", function(){",
+							"    pm.response.to.have.status(201);",
+							"    pm.expect(resJson.success).to.be.true",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.message).to.eq(\"Registration Success\");",
+							"})",
+							"",
+							"pm.test(\"Test id\", function(){",
+							"     pm.expect(resJson).to.have.property(\"id\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\" : \"Tanveer\",\n    \"lastName\" : \"Ahmed\",\n    \"email\" : \"{{$randomEmail}}\",\n    \"password\": \"12345\",\n    \"confirmPassword\" : \"12345\",\n    \"dob\" : {\n        \"year\" : 1991,\n        \"month\": 12,\n        \"day\" : 12\n    },\n    \"gender\" : \"male\",\n    \"agree\" : true\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qa.taltektc.com/api/signup",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"taltektc",
+						"com"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Negative Scenario for Sign Up Page with Non_Alphabetical Names and Over limit email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resJson = pm.response.json();",
+							"",
+							"pm.test(\"Test Success\", function(){",
+							"    pm.response.to.have.status(400);",
+							"    pm.expect(resJson.success).to.be.false",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.message).to.eq(\"Validation Errors\");",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.firstName).to.eq(\"The First Name field may only contain alphabetical characters.\");",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.lastName).to.eq(\"The Last Name field may only contain alphabetical characters.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.email).to.eq(\"The Email-ID field must contain a valid email address.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.password).to.eq(\"The Password field cannot exceed 12 characters in length.\");",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\" : \"Tanveer1\",\n    \"lastName\" : \"Ahmed2\",\n    \"email\" : \"angelamehrigmail.com\",\n    \"password\": \"1234567890876547357687989087065948376758697809087-06594837624758697089087-605943697089\",\n    \"confirmPassword\" : \"1234567890876547357687989087065948376758697809087-06594837624758697089087-605943697089\",\n    \"dob\" : {\n        \"year\" : 1991,\n        \"month\": 12,\n        \"day\" : 12\n    },\n    \"gender\" : \"male\",\n    \"agree\" : true\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qa.taltektc.com/api/signup",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"taltektc",
+						"com"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Negative Scenario for Sign up page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resJson = pm.response.json();",
+							"",
+							"pm.test(\"Test Success\", function(){",
+							"    pm.response.to.have.status(400);",
+							"    pm.expect(resJson.success).to.be.false",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.message).to.eq(\"Validation Errors\");",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.firstName).to.eq(\"The First Name field is required.\");",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.lastName).to.eq(\"The Last Name field is required.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.email).to.eq(\"The Email-ID field is required.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.password).to.eq(\"The Password field is required.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.confirmPassword).to.eq(\"The Confirm Password field is required.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.day).to.eq(\"Day field is required\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.month).to.eq(\"Month field is required\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.year).to.eq(\"Year field is required\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.gender).to.eq(\"The Gender field is required.\");",
+							"})",
+							"",
+							"pm.test(\"Test id\", function(){",
+							"     pm.expect(resJson).not.to.have.property(\"id\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\" : \"\",\n    \"lastName\" : \"\",\n    \"email\"     : \"\",\n    \"password\"  : \"\",\n    \"confirmPassword\"  : \"\",\n    \"dob\"       : {\n        \n    },\n    \"gender\"    : \"\",\n    \"agree\"     : true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qa.taltektc.com/api/signup",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"taltektc",
+						"com"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Email Unique value Validation Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resJson = pm.response.json();",
+							"",
+							"pm.test(\"Test Success\", function(){",
+							"    pm.response.to.have.status(400);",
+							"    pm.expect(resJson.success).to.be.false",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.message).to.eq(\"Validation Errors\");",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.firstName).to.eq(\"The First Name field is required.\");",
+							"})",
+							"",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.lastName).to.eq(\"The Last Name field is required.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.email).to.eq(\"The Email-ID field must contain a unique value.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.password).to.eq(\"The Password field is required.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.confirmPassword).to.eq(\"The Confirm Password field is required.\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.day).to.eq(\"Day field is required\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.month).to.eq(\"Month field is required\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.year).to.eq(\"Year field is required\");",
+							"})",
+							"pm.test(\"Test message\", function(){",
+							"    pm.expect(resJson.error.gender).to.eq(\"The Gender field is required.\");",
+							"})",
+							"",
+							"pm.test(\"Test id\", function(){",
+							"     pm.expect(resJson).not.to.have.property(\"id\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\" : \"\",\n    \"lastName\" : \"\",\n    \"email\"     : \"angelamehri@gmail.com\",\n    \"password\"  : \"\",\n    \"confirmPassword\"  : \"\",\n    \"dob\"       : {\n        \n    },\n    \"gender\"    : \"\",\n    \"agree\"     : true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qa.taltektc.com/api/signup",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"taltektc",
+						"com"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
